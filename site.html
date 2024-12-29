@@ -26,6 +26,9 @@
         }
 
         .project-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
             margin: 20px auto;
             font-size: 1.5em;
             max-width: 80%;
@@ -34,6 +37,14 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px red;
+        }
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0px 0px 5px rgba(255, 0, 0, 0.5);
         }
 
         .input-section {
@@ -102,7 +113,8 @@
         // Generate project list dynamically
         const projectListDiv = document.getElementById('projectList');
         for (let i = 1; i <= projectCount; i++) {
-            const projectItem = document.createElement('p');
+            const projectItem = document.createElement('div');
+            projectItem.className = 'project-item';
             projectItem.textContent = `${i}. (change me)`;
             projectListDiv.appendChild(projectItem);
         }
