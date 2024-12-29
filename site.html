@@ -3,86 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eyes Following Cursor</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            color: white;
-            overflow: hidden;
-        }
-
-        .eye {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            border-radius: 50%;
-            margin: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
-        .pupil {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: black;
-            border-radius: 50%;
-        }
-    </style>
-</head>
-<body>
-    <div class="eye" id="eye1">
-        <div class="pupil" id="pupil1"></div>
-    </div>
-    <div class="eye" id="eye2">
-        <div class="pupil" id="pupil2"></div>
-    </div>
-
-    <script>
-        const eyes = document.querySelectorAll('.eye');
-        const pupils = document.querySelectorAll('.pupil');
-
-        // Adjust pupil position relative to the eye
-        function updateEyes(event) {
-            const { clientX: mouseX, clientY: mouseY } = event;
-
-            eyes.forEach((eye, index) => {
-                const rect = eye.getBoundingClientRect();
-                const eyeCenterX = rect.left + rect.width / 2;
-                const eyeCenterY = rect.top + rect.height / 2;
-
-                const deltaX = mouseX - eyeCenterX;
-                const deltaY = mouseY - eyeCenterY;
-
-                // Normalize movement (max pupil movement = 25px)
-                const distance = Math.min(25, Math.sqrt(deltaX ** 2 + deltaY ** 2));
-                const angle = Math.atan2(deltaY, deltaX);
-
-                const pupilX = Math.cos(angle) * distance;
-                const pupilY = Math.sin(angle) * distance;
-
-                pupils[index].style.transform = `translate(${pupilX}px, ${pupilY}px)`;
-            });
-        }
-
-        document.addEventListener('mousemove', updateEyes);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project List</title>
     <style>
         /* General styling */
@@ -200,4 +120,5 @@
     </script>
 </body>
 </html>
+
 
