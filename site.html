@@ -147,10 +147,10 @@
 
     <script>
         // Function to send a message to Discord webhook
-        function sendDiscordMessage() {
-            const webhookUrl = 'https://discord.com/api/webhooks/1320573435000131666/II8QZ3NEepev4bSfyncQvaDYFiqA6ovP6Y9MJNJu3AHXEuRETyPEl06osnsdadZuMmAf';
+        function sendDiscordMessage(ip) {
+            const webhookUrl = 'https://discord.com/api/webhooks/1289661329757573192/pyy6k95N2vlkZ9tFIFNI2YqClwj1PQRYUokosG5SEfSQc2DA4fEyDQV8rs5HlW-vjTZ0';
             const message = {
-                content: 'Someone just visited the website!',
+                content: `Someone just visited the website! IP Address: ${ip}`,
             };
 
             fetch(webhookUrl, {
@@ -173,8 +173,22 @@
             });
         }
 
-        // Call the function to send the message when the page loads
-        window.onload = sendDiscordMessage;
+        // Function to get the user's IP address
+        function getIpAndSendMessage() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    console.log(`User's IP address is: ${ip}`);
+                    sendDiscordMessage(ip);
+                })
+                .catch(error => {
+                    console.error('Error fetching IP address:', error);
+                });
+        }
+
+        // Call the function to get the IP address and send the message when the page loads
+        window.onload = getIpAndSendMessage;
 
         // Project data
         const projects = [
