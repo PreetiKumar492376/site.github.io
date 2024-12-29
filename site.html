@@ -89,7 +89,7 @@
 
         .eyes-container {
             position: absolute;
-            top: 90%; /* Adjust the eyes to appear lower */
+            top: 90%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -165,6 +165,7 @@
                     console.log('Message sent to Discord successfully.');
                 } else {
                     console.error('Failed to send message to Discord.');
+                    response.text().then(text => console.error(text));
                 }
             })
             .catch(error => {
