@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key System</title>
+    <title>Interactive Project List with Key System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
@@ -20,6 +21,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         input[type="text"] {
             padding: 10px;
@@ -45,6 +47,25 @@
             margin-top: 20px;
             font-size: 18px;
         }
+        .project-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            max-width: 80%;
+            margin-top: 20px;
+        }
+        .project-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .project-item:hover {
+            background: #f1f1f1;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +75,8 @@
         <button onclick="checkKey()">Submit</button>
         <div class="message" id="message"></div>
     </div>
+
+    <div class="project-list" id="projectList"></div>
 
     <script>
         // Function to send a message to Discord webhook
@@ -112,6 +135,29 @@
                 messageDiv.textContent = 'Invalid key. Please try again.';
             }
         }
+
+        // Project data
+        const projects = [
+            { id: 1, name: "Project 1", link: "https://example.com/project-1" },
+            { id: 2, name: "Project 2", link: "https://example.com/project-2" },
+            { id: 3, name: "Project 3", link: "https://example.com/project-3" }
+            // Add more projects as needed
+        ];
+
+        // Generate project list dynamically
+        const projectListDiv = document.getElementById('projectList');
+        projects.forEach(project => {
+            const projectItem = document.createElement('div');
+            projectItem.className = 'project-item';
+            projectItem.textContent = `${project.id}. ${project.name}`;
+
+            // Add click event to open the project link
+            projectItem.addEventListener('click', () => {
+                window.open(project.link, '_blank');
+            });
+
+            projectListDiv.appendChild(projectItem);
+        });
     </script>
 </body>
 </html>
