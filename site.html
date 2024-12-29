@@ -13,10 +13,10 @@
             color: #ffffff;
             text-align: center;
             background-color: #000000;
-            background-image: url('https://cdn.discordapp.com/attachments/1318094227770576936/1322482772316655686/dithered-image.png?ex=67725b0f&is=6771098f&hm=6cd302376a847f043670cdeb2ac66d38a975731dea872adea3f317b27defae03&'); /* Corrected GitHub raw URL */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-image: url('https://cdn.discordapp.com/attachments/1318094227770576936/1322482772316655686/dithered-image.png?ex=67725b0f&is=6771098f&hm=6cd302376a847f043670cdeb2ac66d38a975731dea872adea3f317b27defae03&');
+            background-size: cover; /* Ensure the background image scales */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Avoid repeating the image */
         }
 
         h1 {
@@ -88,12 +88,13 @@
         }
 
         .eyes-container {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             width: 100%;
             display: flex;
             justify-content: center;
             gap: 20px;
+            z-index: 10; /* Ensure the eyes are above other elements */
         }
 
         .eye {
