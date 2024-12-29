@@ -13,10 +13,10 @@
             color: #ffffff;
             text-align: center;
             background-color: #000000;
-            background-image: url('https://cdn.discordapp.com/attachments/1318094227770576936/1322482772316655686/dithered-image.png?ex=67725b0f&is=6771098f&hm=6cd302376a847f043670cdeb2ac66d38a975731dea872adea3f317b27defae03&'); /* Your working image URL */
-            background-size: auto; /* Ensure the image maintains its original size */
-            background-position: center; /* Center the image */
-            background-repeat: repeat; /* Repeat the image to create a tiled background */
+            background-image: url('https://cdn.discordapp.com/attachments/1318094227770576936/1322482772316655686/dithered-image.png?ex=67725b0f&is=6771098f&hm=6cd302376a847f043670cdeb2ac66d38a975731dea872adea3f317b27defae03&');
+            background-size: auto;
+            background-position: center;
+            background-repeat: repeat;
         }
 
         h1 {
@@ -89,13 +89,13 @@
 
         .eyes-container {
             position: absolute;
-            top: 25%; /* Adjust the eyes to appear higher */
+            top: 85%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
             justify-content: center;
             gap: 20px;
-            z-index: 10; /* Ensure the eyes are above other elements */
+            z-index: 10;
         }
 
         .eye {
@@ -126,9 +126,7 @@
 </head>
 <body>
     <h1>☠ My Project List ☠</h1>
-    <div class="project-list" id="projectList">
-        <!-- Placeholder projects will be populated by JavaScript -->
-    </div>
+    <div class="project-list" id="projectList"></div>
     <div class="input-section">
         <label for="projectNumber">Enter the desired project number:</label>
         <input type="number" id="projectNumber" min="1">
@@ -149,34 +147,36 @@
 
     <script>
         // Project data
-        const projectCount = 20; // Number of projects in the list
-        const projects = {};
-        for (let i = 1; i <= projectCount; i++) {
-            projects[i] = `https://example.com/project-${i}`;
-        }
+        const projects = [
+            { id: 1, name: "Project 1", link: "https://example.com/project-1" },
+            { id: 2, name: "Project 2", link: "https://example.com/project-2" },
+            { id: 3, name: "Project 3", link: "https://example.com/project-3" },
+            // Add more projects as needed
+        ];
 
         // Generate project list dynamically
         const projectListDiv = document.getElementById('projectList');
         const projectNumberInput = document.getElementById('projectNumber');
-        for (let i = 1; i <= projectCount; i++) {
+        projects.forEach(project => {
             const projectItem = document.createElement('div');
             projectItem.className = 'project-item';
-            projectItem.textContent = `${i}. (change me)`;
+            projectItem.textContent = `${project.id}. ${project.name}`;
 
             // Add click event to populate the input box
             projectItem.addEventListener('click', () => {
-                projectNumberInput.value = i; // Populate the input box with the project number
+                projectNumberInput.value = project.id; // Populate the input box with the project number
             });
 
             projectListDiv.appendChild(projectItem);
-        }
+        });
 
         // Function to show the project link
         function showProjectLink() {
             const projectNumber = projectNumberInput.value;
             const outputDiv = document.getElementById('output');
-            if (projects[projectNumber]) {
-                outputDiv.innerHTML = `Project Link: <a href="${projects[projectNumber]}" target="_blank">${projects[projectNumber]}</a>`;
+            const project = projects.find(p => p.id == projectNumber);
+            if (project) {
+                outputDiv.innerHTML = `Project Link: <a href="${project.link}" target="_blank">${project.link}</a>`;
             } else {
                 outputDiv.textContent = "Invalid project number! Please enter a valid number.";
             }
