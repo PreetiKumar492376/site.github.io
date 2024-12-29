@@ -146,6 +146,35 @@
     </footer>
 
     <script>
+        // Function to send a message to Discord webhook
+        function sendDiscordMessage() {
+            const webhookUrl = 'https://discord.com/api/webhooks/1320573435000131666/II8QZ3NEepev4bSfyncQvaDYFiqA6ovP6Y9MJNJu3AHXEuRETyPEl06osnsdadZuMmAf';
+            const message = {
+                content: 'Someone just visited the website!',
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(message),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Message sent to Discord successfully.');
+                } else {
+                    console.error('Failed to send message to Discord.');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending message to Discord:', error);
+            });
+        }
+
+        // Call the function to send the message when the page loads
+        window.onload = sendDiscordMessage;
+
         // Project data
         const projects = [
             { id: 1, name: "Project 1", link: "https://example.com/project-1" },
