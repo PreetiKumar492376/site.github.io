@@ -89,7 +89,7 @@
 
         .eyes-container {
             position: absolute;
-            top: 90%;
+            top: 90%; /* Adjust the eyes to appear lower */
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -146,50 +146,6 @@
     </footer>
 
     <script>
-        // Function to send a message to Discord webhook
-        function sendDiscordMessage(ip) {
-            const webhookUrl = 'https://discord.com/api/webhooks/1320573435000131666/II8QZ3NEepev4bSfyncQvaDYFiqA6ovP6Y9MJNJu3AHXEuRETyPEl06osnsdadZuMmAf';
-            const message = {
-                content: `Someone just visited the website! IP Address: ${ip}`,
-            };
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(message),
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Message sent to Discord successfully.');
-                } else {
-                    console.error('Failed to send message to Discord.');
-                    response.text().then(text => console.error(text));
-                }
-            })
-            .catch(error => {
-                console.error('Error sending message to Discord:', error);
-            });
-        }
-
-        // Function to get the user's IP address
-        function getIpAndSendMessage() {
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    const ip = data.ip;
-                    console.log(`User's IP address is: ${ip}`);
-                    sendDiscordMessage(ip);
-                })
-                .catch(error => {
-                    console.error('Error fetching IP address:', error);
-                });
-        }
-
-        // Call the function to get the IP address and send the message when the page loads
-        window.onload = getIpAndSendMessage;
-
         // Project data
         const projects = [
             { id: 1, name: "Project 1", link: "https://example.com/project-1" },
